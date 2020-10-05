@@ -1,0 +1,34 @@
+<%- include ('partials/header.ejs'); -%>
+    <div>
+        <% if (patients.length > 0) {%>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Date of Birth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% patients.forEach((patient, index) => { %>
+                        <tr>
+                            <th scope="row"><%= patient.id %></th>
+                            <td><%= patient.lastName %> </td>
+                            <td><%= patient.firstName %> </td>
+                            <td><%= patient.birthDate %> </td>
+                            <td>
+                                <a href="/edit/<%= patient.id %>" target="_blank" rel="noopener">Edit</a>
+                                <a href="/delete/<%= patient.id %>">Delete</a>
+                            </td>
+                        </tr> 
+                    <% }) %>
+                </tbody>
+            </table> 
+        <% } else { %>
+            <p>No Patients found. Go <a href="/add" >here</a> to add patients.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

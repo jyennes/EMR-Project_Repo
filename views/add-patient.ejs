@@ -1,0 +1,19 @@
+<% include partials/header.ejs %>
+    <div class="container">
+        <% if (message != '') { %>
+            <p><%= message %></p>
+        <% } %>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div>
+                <div class="">
+                    <input type="text" class="" name="lastName" id="last-name" placeholder="Last Name" required>
+                </div>
+                <div class="">
+                    <input type="text" class="" name="firstName" id="first-name" placeholder="First Name" required>
+                </div>
+            <button type="submit" class="">Add Patient</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

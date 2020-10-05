@@ -1,0 +1,27 @@
+<% include partials/header.ejs %>
+<div class="container">
+    <% if (message) { %>
+        <p class=""><%= message %></p>
+    <% } %>
+
+    <% if (patient) { %>
+        <form class="" action="" method="post" enctype="multipart/form-data">
+            <div class="">
+                <div class="">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" class="" name="lastName" id="last-name" value="<%= patient.lastName %>" required>
+                </div>
+                <div class="">
+                    <label for="first-name">First Name</label>
+                    <input type="text" class="" name="firstName" id="first-name" value="<%= patient.last_name %>" required>
+                </div>
+            </div>
+            <button type="submit" class="">Update Patient</button>
+        </form>
+    <% } else { %>
+        <p class="">Patient Not Found. Go <a href="/add">here</a> to add patient.</p>
+    <% } %>
+</div>
+</div>
+</body>
+</html>
