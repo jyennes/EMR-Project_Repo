@@ -7,13 +7,18 @@ module.exports = {
             ,message: ''
         });
     },
-    addPatient: (req, res) => {
-        if (!req.files) {
-            return res.status(400).send("No files were uploaded.");
-        }
+     addPatient: (req, res) => {
 
         let message = '';
         let firstName = req.body.firstName;
         let lastName = req.body.lastName;
-    }
+
+        let query = "INSERT INTO `patient` (firstName, lastName) VALUES ('" + firstName + "', '" + lastName + "')";
+        con.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+        }
+        res.redirect('/');
+    });
+}
 }
