@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 
 const {getHomePage} = require('./routes/index');
-const {addPatientPage, addPatient} = require('./routes/patient');
+const {addPatientPage, addPatient, editPatient, editPatientPage, deletePatient} = require('./routes/patient');
 const port = 5000;
 
 // create connection to database
@@ -36,10 +36,10 @@ app.use(fileUpload());
 
 app.get('/', getHomePage);
 app.get('/add', addPatientPage);
-//app.get('/edit/:id', editPatientPage);
-//app.get('/delete/:id', deletePatient);
+app.get('/edit/:id', editPatientPage);
+app.get('/delete/:id', deletePatient);
 app.post('/add', addPatient);
-//app.post('/edit/:id', editPatient);
+app.post('/edit/:id', editPatient);
 
 
 app.listen(port, () => {
