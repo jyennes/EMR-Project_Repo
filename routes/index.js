@@ -8,7 +8,7 @@ module.exports = {
             }
             res.render('index.ejs', {
                 title: "EMR Title" | "View Patients"
-                ,patients: result
+                ,patient: result
             });
         });
     },

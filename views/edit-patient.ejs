@@ -1,5 +1,5 @@
 <%- include ('partials/header.ejs'); -%>
-<div class="container">
+<div class="">
     <% if (message) { %>
         <p class=""><%= message %></p>
     <% } %>
@@ -13,13 +13,13 @@
                 </div>
                 <div class="">
                     <label for="first-name">First Name</label>
-                    <input type="text" class="" name="firstName" id="first-name" value="<%= patient.last_name %>" required>
+                    <input type="text" class="" name="firstName" id="first-name" value="<%= patient.firstName %>" required>
                 </div>
             </div>
             <button type="submit" class="">Update Patient</button>
         </form>
     <% } else { %>
-        <p class="">Patient Not Found. Go <a href="/add">here</a> to add patient.</p>
+            <p class="">Patient Not Found. Go <a href="/add">here</a> to add patient.</p> 
     <% } %>
 </div>
 </div>
