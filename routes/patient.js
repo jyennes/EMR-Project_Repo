@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = {
     addPatientPage: (req, res) => {
         res.render('add-patient.ejs', {
-            title: "EMR Title" | "Add new patient",
+            title: "EMR Title",
             message: ''
         });
     },
@@ -77,6 +77,20 @@ module.exports = {
                 return res.status(500).send(err);
             }
             res.redirect('/');
+        });
+    },
+    patientRecPage: (req, res) => {
+        let patientId = req.params.id;
+        let query = "SELECT * FROM `patient` WHERE id = '" + patientId + "' ";
+        con.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.render('record.ejs', {
+                title: "Patient Record",
+                patient: result[0],
+                message: ''
+            });
         });
     }
 };

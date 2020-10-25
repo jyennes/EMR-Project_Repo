@@ -7,7 +7,7 @@ module.exports = {
                 res.redirect('/');
             }
             res.render('index.ejs', {
-                title: "EMR Title" | "View Patients"
+                title: "EMR Title"
                 ,patient: result
             });
         });

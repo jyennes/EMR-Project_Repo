@@ -6,7 +6,10 @@ const path = require('path');
 const app = express();
 
 const {getHomePage} = require('./routes/index');
-const {addPatientPage, addPatient, editPatient, editPatientPage, deletePatient} = require('./routes/patient');
+//const {getRecordPage} = require('./routes/record');
+const {addPatientPage, addPatient, editPatient, editPatientPage, deletePatient, patientRecPage} = require('./routes/patient');
+const {allergiesPage} = require('./routes/allergies');
+//const {} = require('./routes/record');
 const port = 5000;
 
 // create connection to database
@@ -35,9 +38,12 @@ app.use(fileUpload());
 
 
 app.get('/', getHomePage);
+//app.get('/record', getRecordPage);
 app.get('/add', addPatientPage);
 app.get('/edit/:id', editPatientPage);
 app.get('/delete/:id', deletePatient);
+app.get('/record/:id', patientRecPage);
+app.get('/allergies/:id', allergiesPage);
 app.post('/add', addPatient);
 app.post('/edit/:id', editPatient);
 
