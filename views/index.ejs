@@ -4,6 +4,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th scope="col">Patient Portal</th>
                         <th scope="col">ID</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">First Name</th>
@@ -15,13 +16,14 @@
                         <th scope="col">Phone Number</th>
                         <th scope="col">Email</th>
                         <th scope="col">Street address</th>
-                        <th scope="col">Zip ID</th>
-                        <th scope="col">Doc ID</th>
+                        <!-- <th scope="col">Zip ID</th>
+                        <th scope="col">Doc ID</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <% patient.forEach((patient, index) => { %>
                         <tr>
+                            <td><a href="/record/<%= patient.id %> target="_blank" rel="noopener">View Record</a></td>
                             <th scope="row"><%= patient.id %></th>
                             <td><%= patient.lastName %> </td>
                             <td><%= patient.firstName %> </td>
@@ -33,8 +35,8 @@
                             <td><%= patient.phoneNumber %> </td>
                             <td><%= patient.email %> </td>
                             <td><%= patient.street %> </td>
-                            <td><%= patient.zipId %> </td>
-                            <td><%= patient.docID %> </td>
+                            <!-- <td><#%= patient.zipId %> </td>
+                            <td><#%= patient.docID %> </td> -->
                             <td>
                                 <a href="/edit/<%= patient.id %>" target="_blank" rel="noopener">Edit</a>
                                 <a href="/delete/<%= patient.id %>">Delete</a>

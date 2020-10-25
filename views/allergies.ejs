@@ -1,0 +1,26 @@
+<%- include ('partials/header.ejs'); -%>
+    <div>
+        <!-- <#% if (allergy.length > 0) {%>  -->
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% allergy.forEach((allergy, record) => { %>
+                        <tr>
+                            <th scope="row"><%= allergy.id %></th>
+                            <td><% allergy.name %> </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        <!-- <#% } else { %>
+            <p>No Allergies found.</p>
+        <#% } %> -->
+    </div>
+</div>
+</body>
+</html>
