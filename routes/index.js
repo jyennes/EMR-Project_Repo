@@ -1,6 +1,7 @@
 module.exports = {
     getHomePage: (req, res) => {
-        let query = "SELECT * FROM `patient` ORDER BY id ASC";
+         let email = req.user.email 
+         let query = "SELECT * FROM `patient` WHERE email = '" + email + "' ORDER BY id ASC";
 
         con.query(query, (err, result) => {
             if (err) {
