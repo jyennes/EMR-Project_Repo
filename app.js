@@ -8,7 +8,7 @@ const path = require('path');
 const app = express();
 const passport = require('passport');
 const session = require('express-session');
-const LocalStrategy = require('passport-local').Strategy;
+// const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 // Declare route methods
@@ -17,7 +17,7 @@ const {addPatientPage, addPatient, editPatient, editPatientPage, deletePatient, 
 const {allergiesPage} = require('./routes/allergies');
 
 // login
-const {loginPage, registerPage, registerUser, userAuth} = require('./routes/login');
+const {loginPage, registerPage, registerUser, userAuth, salt} = require('./routes/login');
 
 const port = 5000;
 
@@ -75,35 +75,6 @@ app.listen(port, () => {
     console.log(`Server running on port: ${port}`);
 });
 
-
-passport.serializeUser((user, done) => done(null, user.id))
-passport.deserializeUser(function(id, done) {
-    con.query("select * from users where id = "+id,function(err,rows){	
-        done(err, rows[0]);
-    });
-})
-
-passport.use(new LocalStrategy({
-    usernameField : 'email',
-    passwordField : 'pword',
-    passReqToCallBack: true
-
-},function(email, pword, done) { 
-
-    con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err,rows){
-       if (err)
-           return done(err);
-        // const match = bcrypt.compareSync(((rows[0].pword), pword));
-        if (!rows.length) {
-           return done(null, false, console.log('No user found.')); 
-       } 
-       
-       if (! (rows[0].pword == pword)) {
-           return done(null, false, console.log('Wrong password.')); 
-       }
-       return done(null, rows[0]);			
-   }); 
-}));
 
 // Used to check if logged in.
 function checkAuthenticated(req, res, next) {
