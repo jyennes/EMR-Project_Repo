@@ -1,4 +1,4 @@
-<% include partials/header.ejs %>
+<%- include ('partials/header.ejs'); -%>
 
 <div>
     <h1>Connect Google Authenticator</h1>
@@ -7,7 +7,9 @@
 
 <div>
     <form method="post">
-        <%- qr %>
+        <div>
+            <%- qr %>
+        </div>
         <button type="submit">Continue</button>
     </form>
 </div>

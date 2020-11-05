@@ -9,7 +9,7 @@ const app = express();
 const passport = require('passport');
 const session = require('express-session');
 // const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 
 // Declare route methods
