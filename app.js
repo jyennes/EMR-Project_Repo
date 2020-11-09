@@ -9,7 +9,8 @@ const app = express();
 const passport = require('passport');
 const session = require('express-session');
 // const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+
 
 // Declare route methods
 const {getHomePage} = require('./routes/index');
@@ -17,7 +18,7 @@ const {addPatientPage, addPatient, editPatient, editPatientPage, deletePatient, 
 const {allergiesPage} = require('./routes/allergies');
 
 // login
-const {loginPage, registerPage, registerUser, userAuth, salt} = require('./routes/login');
+const {loginPage, registerPage, registerUser, userAuth, twoFactorPage, twoFactor} = require('./routes/login');
 
 const port = 5000;
 
@@ -66,8 +67,10 @@ app.post('/edit/:id', editPatient);
 // Login Routes
 app.get('/login', loginPage);
 app.get('/register', registerPage);
+app.get('/2fa', twoFactorPage)
 app.post('/login', userAuth);
 app.post('/register', registerUser);
+app.post('/2fa', twoFactor);
 
 
 
@@ -90,3 +93,5 @@ function checkAuthenticated(req, res, next) {
 //     }
 //     next()
 //   }
+
+
