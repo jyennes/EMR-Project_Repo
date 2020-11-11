@@ -41,7 +41,7 @@
                             <td><#%= patient.docID %> </td> -->
                             <td>
                                 <a href="/edit/<%= patient.id %>" target="_blank" rel="noopener">Edit</a>
-                                <a href="/delete/<%= patient.id %>">Delete</a>
+                                <a href="/delete/<%= patient.id %>" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
                             </td>
                         </tr> 
                     <% }) %>
