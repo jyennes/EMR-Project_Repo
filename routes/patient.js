@@ -1,4 +1,6 @@
+const { randomInt } = require('crypto');
 const fs = require('fs');
+const crypto = require('../config/crypto');
 
 module.exports = {
     addPatientPage: (req, res) => {
@@ -10,21 +12,30 @@ module.exports = {
     addPatient: (req, res) => {
 
         let message = '';
-        let firstName = req.body.firstName;
-        let lastName = req.body.lastName;
-        let birthDate = req.body.birthDate
-        let heightFeet = req.body.heightFeet
-        let heightInches = req.body.heightInches
-        let weight = req.body.weight
-        let areaCode = req.body.areaCode
-        let PhoneNumber = req.body.PhoneNumber
-        let email = req.body.email
-        let street = req.body.street
+        var firstName = req.body.firstName;
+        var lastName = req.body.lastName;
+        var birthDate = req.body.birthDate
+        var heightFeet = req.body.heightFeet
+        var heightInches = req.body.heightInches
+        var weight = req.body.weight
+        // var areaCode = req.body.areaCode
+        var phoneNumber = req.body.phoneNumber
+        var email = req.body.email
+        var street = req.body.street
         //let zipId = req.body.zipId
         //let docId = req.body.docId
+        let patientId = req.user.id;
 
-        let query = "INSERT INTO `patient` (firstName, lastName, birthDate, heightFeet, heightInches, weight, areaCode, PhoneNumber, email, street) VALUES ('" +
-            firstName + "', '" + lastName + "', '" + birthDate + "', '" + heightFeet + "', '" + heightInches + "', '" + weight + "', '" + areaCode + "', '" + PhoneNumber + "', '" + email + "', '" + street + "')";
+
+        var firstName = crypto.encrypt(firstName);
+        var lastName = crypto.encrypt(lastName);
+        // var birthDate = crypto.encrypt(birthDate);
+        var phoneNumber = crypto.encrypt(phoneNumber);
+        var email = crypto.encrypt(email);
+        var street = crypto.encrypt(street)
+
+        let query = "INSERT INTO `patient` (firstName, lastName, birthDate, heightFeet, heightInches, weight, PhoneNumber, email, street, id) VALUES ('" +
+            firstName + "', '" + lastName + "', '" + birthDate + "', '" + heightFeet + "', '" + heightInches + "', '" + weight + "', '" + phoneNumber + "', '" + email + "', '" + street + "', '" + patientId + "')";
         con.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -48,19 +59,26 @@ module.exports = {
     },
     editPatient: (req, res) => {
         let patientId = req.params.id;
-        let firstName = req.body.firstName;
-        let lastName = req.body.lastName;
+        var firstName = req.body.firstName;
+        var lastName = req.body.lastName;
         let birthDate = req.body.birthDate
         let heightFeet = req.body.heightFeet
         let heightInches = req.body.heightInches
         let weight = req.body.weight
         let areaCode = req.body.areaCode
-        let PhoneNumber = req.body.PhoneNumber
-        let email = req.body.email
-        let street = req.body.street
+        var phoneNumber = req.body.phoneNumber
+        var email = req.body.email
+        var street = req.body.street
+
+        var firstName = crypto.encrypt(firstName);
+        var lastName = crypto.encrypt(lastName);
+        // var birthDate = crypto.encrypt(birthDate);
+        var phoneNumber = crypto.encrypt(phoneNumber);
+        var email = crypto.encrypt(email);
+        var street = crypto.encrypt(street)
 
         // let query = 'UPDATE `patient` SET `firstName` = ?, WHERE `id` = ?', [firstName, patientId];
-        let query = "UPDATE `patient` SET `firstName` = '" + firstName + "', `lastName` = '" + lastName + "', `birthDate` =  '" + birthDate + "', `heightFeet` = '" + heightFeet + "', `heightInches` = '" + heightInches + "', `weight` = '" + weight + "', `areaCode` = '" + areaCode + "', `phoneNumber` = '" + PhoneNumber + "', `email` = '" + email + "', `street` = '" + street + "' WHERE `patient`.`id` = '" + patientId + "'";
+        let query = "UPDATE `patient` SET `firstName` = '" + firstName + "', `lastName` = '" + lastName + "', `birthDate` =  '" + birthDate + "', `heightFeet` = '" + heightFeet + "', `heightInches` = '" + heightInches + "', `weight` = '" + weight + "', `areaCode` = '" + areaCode + "', `phoneNumber` = '" + phoneNumber + "', `email` = '" + email + "', `street` = '" + street + "' WHERE `patient`.`id` = '" + patientId + "'";
         con.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);

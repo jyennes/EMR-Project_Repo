@@ -3,39 +3,46 @@
         <% if (message != '') { %>
             <p><%= message %></p>
         <% } %>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form class="shadow-sm p-3 mb-5 bg-white rounded" action="" method="post" enctype="multipart/form-data">
             <!-- <div> -->
-                <div class="">
-                    <input type="text" class="" name="lastName" id="last-name" placeholder="Last Name" required>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" id="last-name" placeholder="Enter last name" required>
                 </div>
-                <div class="">
-                    <input type="text" class="" name="firstName" id="first-name" placeholder="First Name" required>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" name="firstName" id="first-name" placeholder="Enter first name" required>
                 </div>
-                <div class="">
+                <div class="form-group">
                     <label for="birthDate">Date of Birth:</label>
-                    <input type="date" class="" name="birthDate" id="birth-date" placeholder="Birth Date" required>
+                    <input type="date" class="form-control" name="birthDate" id="birth-date" placeholder="Enter birth date" required>
                 </div>
-                <div class="">
-                    <input type="number" class="" name="heightFeet" id="height-feet" placeholder="Height (feet)" required>
+                <div class="form-group">
+                    <label for="heightFeet">Height (feet)</label>
+                    <input type="number" class="form-control" name="heightFeet" id="height-feet" placeholder="Enter height (feet)" required>
                 </div>
-                <div class="">
-                    <input type="number" class="" name="heightInches" id="height-inches" placeholder="Height (inches)" required>
+                <div class="form-group">
+                    <label for="hieghtInches">Height (inches)</label>
+                    <input type="number" class="form-control" name="heightInches" id="height-inches" placeholder="Enter height (inches)" required>
                 </div>
-                <div class="">
-                    <input type="number" class="" name="weight" id="weight" placeholder="weight" required>
+                <div class="form-group">
+                    <label for="birthDate">Weight</label>
+                    <input type="number" class="form-control" name="weight" id="weight" placeholder="Enter weight" required>
                 </div>
                 <!-- <div class="">
                     <input type="number" class="" name="areaCode" id="area-code" placeholder="Area Code" required>
                 </div> -->
-                <div class="">
-                    <!-- use "tel" and update database-->
-                    <input type="text" class="" name="phoneNumber" id="phone-number" placeholder="Telephone" required>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="text" class="form-control" name="phoneNumber" id="phone-number" placeholder="Enter phone number" required>
                 </div>
-                <div class="">
-                    <input type="email" class="" name="email" id="email" placeholder="Email " required>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required>
                 </div>
-                <div class="">
-                    <input type="text" class="" name="street" id="street" placeholder="Street address" required>
+                <div class="form-group">
+                    <label for="street">Street Address</label>
+                    <input type="text" class="form-control" name="street" id="street" placeholder="Enter street address" required>
                 </div>
                 <!-- <div class="">
                     <input type="text" class="" name="zipId" id="" placeholder="" required>
@@ -44,9 +51,10 @@
                     <input type="text" class="" name="docId" id="" placeholder="" required>
                 </div> -->
 
-            <button type="submit" class="">Add Patient</button>
+            <button type="submit" class="btn btn-primary">Add Patient</button>
         </form>
     </div>
+
 </div>
 </body>
 </html>

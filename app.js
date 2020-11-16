@@ -15,7 +15,12 @@ const session = require('express-session');
 // Declare route methods
 const {getHomePage} = require('./routes/index');
 const {addPatientPage, addPatient, editPatient, editPatientPage, deletePatient, patientRecPage} = require('./routes/patient');
-const {allergiesPage} = require('./routes/allergies');
+const {allergiesPage, addAllergyPage, addAllergy, editAllergyPage, editAllergy, deleteAllergy} = require('./routes/allergies');
+const {doctorsPage, addDoctorPage, addDoctor, editDoctorPage, editDoctor, deleteDoctor} = require('./routes/doctors');
+const {nursesPage, addNursePage, addNurse, editNursePage, editNurse, deleteNurse} = require('./routes/nurses');
+const {insurancePage, addInsurancePage, addInsurance, editInsurancePage, editInsurance, deleteInsurance} = require('./routes/insurance');
+const {medicationsPage, addMedicationPage, addMedication, editMedicationPage, editMedication, deleteMedication} = require('./routes/medications');
+
 
 // login
 const {loginPage, registerPage, registerUser, userAuth, twoFactorPage, twoFactor} = require('./routes/login');
@@ -54,13 +59,18 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Makes user available on all ejs files (not used yet)
+// app.use(function(req, res, next) {
+//   res.locals.id = req.user.id;
+//   next();
+// });
+
 // Routes
 app.get('/',checkAuthenticated, getHomePage);
 app.get('/add', addPatientPage);
 app.get('/edit/:id', editPatientPage);
 app.get('/delete/:id', deletePatient);
 app.get('/record/:id', patientRecPage);
-app.get('/allergies/:id', allergiesPage);
 app.post('/add', addPatient);
 app.post('/edit/:id', editPatient);
 
@@ -72,6 +82,45 @@ app.post('/login', userAuth);
 app.post('/register', registerUser);
 app.post('/2fa', twoFactor);
 
+// Allergy Routes
+app.get('/allergies/:id', allergiesPage);
+app.get('/addAllergy', addAllergyPage);
+app.get('/editAllergy/:id', editAllergyPage);
+app.get('/deleteAllergy/:id', deleteAllergy);
+app.post('/addAllergy', addAllergy);
+app.post('/editAllergy/:id', editAllergy);
+
+// Doctor Routes
+app.get('/doctors/:id', doctorsPage);
+app.get('/addDoctor', addDoctorPage);
+app.get('/editDoctor/:id', editDoctorPage);
+app.get('/deleteDoctor/:id', deleteDoctor);
+app.post('/addDoctor', addDoctor);
+app.post('/editDoctor/:id', editDoctor);
+
+// Nurse Routes
+app.get('/Nurses/:id', nursesPage);
+app.get('/addNurse', addNursePage);
+app.get('/editNurse/:id', editNursePage);
+app.get('/deleteNurse/:id', deleteNurse);
+app.post('/addNurse', addNurse);
+app.post('/editNurse/:id', editNurse);
+
+// Insurance Routes
+app.get('/insurance/:id', insurancePage);
+app.get('/addInsurance', addInsurancePage);
+app.get('/editInsurance/:id', editInsurancePage);
+app.get('/deleteInsurance/:id', deleteInsurance);
+app.post('/addInsurance', addInsurance);
+app.post('/editInsurance/:id', editInsurance);
+
+// Medication Routes
+app.get('/medications/:id', medicationsPage);
+app.get('/addMedication', addMedicationPage);
+app.get('/editMedication/:id', editMedicationPage);
+app.get('/deleteMedication/:id', deleteMedication);
+app.post('/addMedication', addMedication);
+app.post('/editMedication/:id', editMedication);
 
 
 app.listen(port, () => {
