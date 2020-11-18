@@ -4,10 +4,15 @@ const crypto = require('../config/crypto');
 
 module.exports = {
     addPatientPage: (req, res) => {
-        res.render('add-patient.ejs', {
-            title: "EMR Title",
-            message: ''
-        });
+        if (req.user.role == 'doctor' || req.user.role == 'nurse'){
+            res.render('add-patient.ejs', {
+                title: "EMR Title",
+                message: ''
+            });
+        }
+        else {
+        res.redirect('/');
+        }
     },
     addPatient: (req, res) => {
 
@@ -24,7 +29,7 @@ module.exports = {
         var street = req.body.street
         //let zipId = req.body.zipId
         //let docId = req.body.docId
-        let patientId = req.user.id;
+        let patientId = req.body.patientId;
 
 
         var firstName = crypto.encrypt(firstName);
@@ -34,7 +39,7 @@ module.exports = {
         var email = crypto.encrypt(email);
         var street = crypto.encrypt(street)
 
-        let query = "INSERT INTO `patient` (firstName, lastName, birthDate, heightFeet, heightInches, weight, PhoneNumber, email, street, id) VALUES ('" +
+        let query = "INSERT INTO `patient` (firstName, lastName, birthDate, heightFeet, heightInches, weight, PhoneNumber, email, street, patientId) VALUES ('" +
             firstName + "', '" + lastName + "', '" + birthDate + "', '" + heightFeet + "', '" + heightInches + "', '" + weight + "', '" + phoneNumber + "', '" + email + "', '" + street + "', '" + patientId + "')";
         con.query(query, (err, result) => {
             if (err) {
@@ -44,18 +49,23 @@ module.exports = {
         });
     },
     editPatientPage: (req, res) => {
-        let patientId = req.params.id;
-        let query = "SELECT * FROM `patient` WHERE id = '" + patientId + "' ";
-        con.query(query, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.render('edit-patient.ejs', {
-                title: "Edit patient",
-                patient: result[0],
-                message: ''
+        if (req.user.role == 'doctor' || req.user.role == 'nurse'){
+            let patientId = req.params.id;
+            let query = "SELECT * FROM `patient` WHERE id = '" + patientId + "' ";
+            con.query(query, (err, result) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                res.render('edit-patient.ejs', {
+                    title: "Edit patient",
+                    patient: result[0],
+                    message: ''
+                });
             });
-        });
+        }
+        else {
+            res.redirect('/');
+            }
     },
     editPatient: (req, res) => {
         let patientId = req.params.id;
@@ -87,15 +97,20 @@ module.exports = {
         });
     },
     deletePatient: (req, res) => {
-        let patientId = req.params.id;
-        let deleteUserQuery = 'DELETE FROM patient WHERE id = "' + patientId + '"';
+        if (req.user.role == 'doctor' || req.user.role == 'nurse'){
+            let patientId = req.params.id;
+            let deleteUserQuery = 'DELETE FROM patient WHERE id = "' + patientId + '"';
 
-        con.query(deleteUserQuery, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+            con.query(deleteUserQuery, (err, result) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                res.redirect('/');
+            });
+        }
+        else {
             res.redirect('/');
-        });
+            }
     },
     patientRecPage: (req, res) => {
         let patientId = req.params.id;

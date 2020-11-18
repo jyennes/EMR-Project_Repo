@@ -23,10 +23,13 @@ module.exports = {
     },
 
     addDoctor: (req, res) => {
-        var name = req.body.name;
-        var name = crypto.encrypt(name);
+        var lastName = req.body.lastName;
+        var firstName = req.body.firstName;
 
-        let query = "INSERT INTO `doctor` (name) VALUES ('" + name + "')";
+        var lastName = crypto.encrypt(lastName);
+        var firstName = crypto.encrypt(firstName);
+
+        let query = "INSERT INTO `doctor` (lastName, firstName) VALUES ('" + lastName + "', '" + firstName + "')";
         con.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -49,10 +52,13 @@ module.exports = {
         });
     },
     editDoctor: (req, res) => {
-        var name = req.body.name;
-        var name = crypto.encrypt(name);
+        var lastName = req.body.lastName;
+        var firstName = req.body.firstName;
 
-        let query = "UPDATE `doctor` SET 'name' = '" + name + "'";
+        var lastName = crypto.encrypt(lastName);
+        var firstName = crypto.encrypt(firstName);
+
+        let query = "UPDATE `doctor` SET 'lastName' = '" + lastName + "', `firstName` = '" + firstName + "'";
         con.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);

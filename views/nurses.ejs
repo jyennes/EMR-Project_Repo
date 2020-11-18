@@ -1,8 +1,8 @@
 <%- include ('partials/header.ejs'); -%>
     <div class="container-fluid"> 
-        <a  href="/addDoctor" class="btn btn-primary btn-sm" title="Add a new patient">Add doctor</a>
+        <a  href="/addnurse" class="btn btn-primary btn-sm" title="Add a new nurse">Add Nurse</a>
 
-        <% if (doctor.length > 0) {%> 
+        <% if (nurse.length > 0) {%> 
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -12,17 +12,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% doctor.forEach((doctor, doctors) => { %>
+                    <% nurse.forEach((nurse, nurses) => { %>
                         <tr>
-                            <th scope="row"><%= doctor.id %></th>
-                            <td><%= doctor.lastName %> </td>
-                            <td><%= doctor.firstName %> </td>
+                            <th scope="row"><%= nurse.id %></th>
+                            <td><%= nurse.lastName %> </td>
+                            <td><%= nurse.firstName %> </td>
                         </tr>
                         <% }) %>
                 </tbody>
             </table>
         <% } else { %>
-            <p>No doctors found.</p>
+            <p>No nurses found.</p>
         <% } %>
     </div>
 </div>

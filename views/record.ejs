@@ -1,14 +1,15 @@
 <%- include ('partials/header.ejs'); -%>
-  
-        <div>
-            <h1>Records</h1>
-                <a href="/allergies/ <%= patient.id %> target="_blank" rel="noopener">Allergies</a>
-            <p>Doctors</p>
-            <p>Nurse</p>
-            <p>Insurance</p>
-            <p>Medications</p>
-            <p>Medication Orders</p>
-        </div>   
+<div class="container">  
+<h1>Records</h1>
+    <div class="list-group list-group-striped">
+        <a href="/allergies/ <%= patient.id %> target="_blank" rel="noopener" class="list-group-item list-group-item-action">Allergies</a>
+        <a href="/doctors/ <%= patient.id %> target="_blank" rel="noopener" class="list-group-item list-group-item-action">Doctors</a>
+        <a href="/nurses/ <%= patient.id %> target="_blank" rel="noopener" class="list-group-item list-group-item-action">Nurse</a>
+        <a href="/insurance/ <%= patient.id %> target="_blank" rel="noopener" class="list-group-item list-group-item-action">Insurance</a>
+        <a href="/medications/ <%= patient.id %> target="_blank" rel="noopener" class="list-group-item list-group-item-action">Medications</a>
+        <!-- <a href="/allergies/ <#%= patient.id %> target="_blank" rel="noopener">Medication Orders</a> -->
+    </div>  
+</div> 
 </div>
 </body>
 </html>

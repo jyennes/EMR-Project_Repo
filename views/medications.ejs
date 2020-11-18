@@ -1,8 +1,8 @@
 <%- include ('partials/header.ejs'); -%>
     <div class="container-fluid"> 
-        <a  href="/addAllergy" class="btn btn-primary btn-sm" title="Add a new allergy">Add allergy</a>
+        <a  href="/addmedication" class="btn btn-primary btn-sm" title="Add a new medication">Add medication</a>
 
-        <% if (allergy.length > 0) {%> 
+        <% if (medication.length > 0) {%> 
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -11,16 +11,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% allergy.forEach((allergy, allergies) => { %>
+                    <% medication.forEach((medication, medications) => { %>
                         <tr>
-                            <th scope="row"><%= allergy.id %></th>
-                            <td><%= allergy.name %> </td>
+                            <th scope="row"><%= medication.id %></th>
+                            <td><%= medication.name %> </td>
                         </tr>
                         <% }) %>
                 </tbody>
             </table>
         <% } else { %>
-            <p>No Allergies found.</p>
+            <p>No medications found.</p>
         <% } %>
     </div>
 </div>

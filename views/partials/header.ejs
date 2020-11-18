@@ -1,14 +1,25 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title><%= title %></title>
 </head>
 <style>
-
+    .login {
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+        text-align: center;
+    }
 </style>
 <body>
     <div>
-        <nav>
-            <span><a href="/">EMR app</a></span>
+        <nav class="navbar bg-light m-2 p-3">
+            <a href="/" class="badge badge-light">EMR app</a>
+            <a href="/login" class="badge badge-primary">Login</a>
+            <!-- <span><a href="/register">Register</a></span> -->
             <!-- <a  href="/add" title="Add a new patient">Add patient</a> -->
         </nav>  

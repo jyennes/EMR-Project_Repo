@@ -23,10 +23,13 @@ module.exports = {
     },
 
     addNurse: (req, res) => {
-        var name = req.body.name;
-        var name = crypto.encrypt(name);
+        var lastName = req.body.lastName;
+        var firstName = req.body.firstName;
 
-        let query = "INSERT INTO `nurse` (name) VALUES ('" + name + "')";
+        var lastName = crypto.encrypt(lastName);
+        var firstName = crypto.encrypt(firstName);
+
+        let query = "INSERT INTO `nurse` (lastName, firstName) VALUES ('" + lastName + "', '" + firstName + "')";
         con.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -52,7 +55,7 @@ module.exports = {
         var name = req.body.name;
         var name = crypto.encrypt(name);
 
-        let query = "UPDATE `nurse` SET 'name' = '" + name + "'";
+        let query = "UPDATE `nurse` SET 'lastName' = '" + lastName + "', `firstName` = '" + firstName + "'";
         con.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
