@@ -4,7 +4,7 @@ const crypto = require('../config/crypto');
 
 module.exports = {
     addPatientPage: (req, res) => {
-        if (req.user.role == 'doctor' || req.user.role == 'nurse'){
+        if (req.user.role == 'Doctor' || req.user.role == 'Nurse'){
             res.render('add-patient.ejs', {
                 title: "EMR Title",
                 message: ''
@@ -49,7 +49,7 @@ module.exports = {
         });
     },
     editPatientPage: (req, res) => {
-        if (req.user.role == 'doctor' || req.user.role == 'nurse'){
+        if (req.user.role == 'Doctor' || req.user.role == 'Nurse'){
             let patientId = req.params.id;
             let query = "SELECT * FROM `patient` WHERE id = '" + patientId + "' ";
             con.query(query, (err, result) => {
@@ -97,7 +97,7 @@ module.exports = {
         });
     },
     deletePatient: (req, res) => {
-        if (req.user.role == 'doctor' || req.user.role == 'nurse'){
+        if (req.user.role == 'Doctor' || req.user.role == 'Nurse'){
             let patientId = req.params.id;
             let deleteUserQuery = 'DELETE FROM patient WHERE id = "' + patientId + '"';
 

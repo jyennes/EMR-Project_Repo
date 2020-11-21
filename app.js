@@ -20,7 +20,8 @@ const {doctorsPage, addDoctorPage, addDoctor, editDoctorPage, editDoctor, delete
 const {nursesPage, addNursePage, addNurse, editNursePage, editNurse, deleteNurse} = require('./routes/nurses');
 const {insurancePage, addInsurancePage, addInsurance, editInsurancePage, editInsurance, deleteInsurance} = require('./routes/insurance');
 const {medicationsPage, addMedicationPage, addMedication, editMedicationPage, editMedication, deleteMedication} = require('./routes/medications');
-
+const {adminPage, role, rolePage} = require('./routes/admin');
+const {nurseAssign, nurseAssignPage, nurseAdminPage} = require('./routes/nurseAdmin');
 
 // login
 const {loginPage, registerPage, registerUser, userAuth, twoFactorPage, twoFactor} = require('./routes/login');
@@ -74,13 +75,21 @@ app.get('/record/:id', patientRecPage);
 app.post('/add', addPatient);
 app.post('/edit/:id', editPatient);
 
+// Admin Routes
+app.get('/admin',adminPage);
+app.get('/role/:id',rolePage);
+app.get('/nurseAdmin', nurseAdminPage);
+app.get('/nurseAssign/:id', nurseAssignPage)
+app.post('/role/:id', role);
+app.post('/nurseAssign/:id', nurseAssign)
+
 // Login Routes
 app.get('/login', loginPage);
 app.get('/register', registerPage);
-app.get('/2fa', twoFactorPage)
+// app.get('/2fa', twoFactorPage)
 app.post('/login', userAuth);
 app.post('/register', registerUser);
-app.post('/2fa', twoFactor);
+// app.post('/2fa', twoFactor);
 
 // Allergy Routes
 app.get('/allergies/:id', allergiesPage);

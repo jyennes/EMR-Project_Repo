@@ -1,6 +1,4 @@
 const crypto = require('../config/crypto');
-
-
 module.exports = {
     getHomePage: (req, res) => {
          let email = req.user.email;
@@ -13,7 +11,7 @@ module.exports = {
          let nQuery = ("SELECT * FROM `patient` WHERE nurseId = '" + id + "' ORDER BY nurseId ASC");
 
         con.query(roleQuery, (err, result) => {
-            if (role == `doctor`) {
+            if (role == `Doctor`) {
                 con.query(dQuery, (err, result) => {
                     if (err) {
                         res.redirect('/');
@@ -25,7 +23,7 @@ module.exports = {
                     });
                 });
             }
-            else if (role == `nurse`) {
+            else if (role == `Nurse`) {
                 con.query(nQuery, (err, result) => {
                     if (err) {
                         res.redirect('/');

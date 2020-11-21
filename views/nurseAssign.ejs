@@ -1,0 +1,19 @@
+<%- include ('partials/header.ejs'); -%>
+
+    <% if (patient) { %>
+        <form class="" action="" method="post" enctype="multipart/form-data">
+            <div class="">
+                <div class="">
+                    <label for="nurse-ID">Nurse ID</label>
+                    <input type="number" class="" name="nurseId" id="nurse-ID" value="" required>
+                </div>
+            </div>
+            <button type="submit" class="">Update ID</button>
+        </form>
+    <% } else { %>
+        <p class="">Patient Not Found.</p> 
+    <% } %>
+
+</div>
+</body>
+</html>

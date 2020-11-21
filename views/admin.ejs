@@ -1,0 +1,33 @@
+<%- include ('partials/header.ejs'); -%>
+<div class="container-fluid">
+
+    <% if (users.length > 0) {%>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach((users, index) => { %>
+                    <tr>
+                        <th scope="row"><%= users.id %></th>
+                        <td><%= users.email %> </td>
+                        <td><%= users.role %> </td>
+                        <td><a href="/role/<%= users.id %> target="_blank" rel="noopener">Change Role</a></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No users found.</p>
+    <% } %>
+</div>
+
+
+
+</div>
+</body>
+</html>

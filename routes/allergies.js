@@ -1,4 +1,6 @@
 //const fs = require('fs');
+const crypto = require('../config/crypto');
+
 
 module.exports = {
     allergiesPage: (req, res) => {

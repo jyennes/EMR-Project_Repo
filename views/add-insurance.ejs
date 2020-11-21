@@ -1,4 +1,13 @@
 <%- include ('partials/header.ejs'); -%>
+    <div class="container">
+        <% if (message != '') { %>
+            <p><%= message %></p>
+        <% } %>   
+        <form class="shadow-sm p-3 mb-5 bg-white rounded" action="" method="post" enctype="multipart/form-data">
+
+            <button type="submit" class="btn btn-primary">Add blank</button>
+        </form>
+    </div>
 
 </div>
 </body>

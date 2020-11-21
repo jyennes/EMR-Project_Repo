@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-//const LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const salt = bcrypt.genSaltSync(10);
 const GoogleAuthenticator = require('passport-2fa-totp').GoogeAuthenticator;
-const TwoFAStrategy = require('passport-2fa-totp').Strategy;
+//const TwoFAStrategy = require('passport-2fa-totp').Strategy;
 
 module.exports = {
     loginPage: (req, res) => {
@@ -24,7 +24,7 @@ module.exports = {
     registerUser: (req, res, next) => {
         console.log(req.body);
         passport.authenticate('register', {
-            successRedirect: '/2fa',
+            successRedirect: '/',
             failureRedirect: '/register',
             failureFlash: true
             })(req, res, next);
@@ -36,31 +36,34 @@ module.exports = {
         });
     },
 
-    twoFactorPage: (req, res) => {
-        var err = {message: '2fa Error'};
-        var qrInfo = GoogleAuthenticator.register(req.user.email);
-        req.session.qr = qrInfo.secret;
+    // twoFactorPage: (req, res) => {
+    //     var err = {message: '2fa Error'};
+    //     var qrInfo = GoogleAuthenticator.register(req.user.email);
+    //     req.session.qr = qrInfo.secret;
 
-        res.render('2fa.ejs', {
-            title: "Two Factor",
-            errors: err,
-            qr: qrInfo.qr
-        });
-    },
+    //     res.render('2fa.ejs', {
+    //         title: "Two Factor",
+    //         errors: err,
+    //         qr: qrInfo.qr
+    //     });
+    // },
 
-    twoFactor: (req, res, next) => {
-        if (!req.session.qr) {
-            {message: '2fa error'};
-            return res.redirect('/2fa');
-        }(req, res, next);
-        // users = ("SELECT * FROM `users` WHERE `email` = '" + email + "'", function(err, rows){
-        //     if (err) {
-        //         console.log("error");
-        //         return res.redirect('/2fa');
-        //     }
-        //     users.update
-        // })
-    },
+    // twoFactor: (req, res, next) => {
+    //     if (!req.session.qr) {
+    //         {console.log ('2fa error')};
+    //         return res.redirect('/2fa');
+    //     }(req, res, next);
+    //     con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err,rows) {
+    //         rows.update(rows, { $set: { secret: req.session.qr } }, function (err) {
+    //             if (err) {
+    //                 console.log('setup-2fa-error', err);
+    //                 return res.redirect('/setup-2fa');
+    //             }
+    //             res.redirect('/');
+    //         })
+    //     })
+    // }
+
 };
 
 
@@ -73,11 +76,12 @@ passport.deserializeUser(function(id, done) {
 })
 
 // Verify user and password with local strategies.
-passport.use('login', new TwoFAStrategy({
+passport.use('login', new LocalStrategy({
     usernameField : 'email',
     passwordField : 'pword',
-    passReqToCallBack: true,
-    skipTotpVerification: true
+    codeField: 'code'
+    //passReqToCallBack: true,
+    //skipTotpVerification: true
 },
 function(email, pword, done) { 
 
@@ -92,20 +96,21 @@ function(email, pword, done) {
        }
        return done(null, rows[0]);			
    })
-}, function(email, done) {
-      con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err,rows) {
-        if (!rows.secret) {
-            done(new Error("Google Authenticator is not setup."));
-        } else {
-            var secret = GoogleAuthenticator.decodeSecret(rows.secret);
-            done(null, secret, 30);
-        }
-      })
-}
+}, 
+// function(email, done) {
+//       con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err,rows) {
+//         if (!rows.secret) {
+//             done(new Error("Google Authenticator is not setup."));
+//         } else {
+//             var secret = GoogleAuthenticator.decodeSecret(rows.secret);
+//             done(null, secret, 30);
+//         }
+//       })
+// }
 ));
 
 //register with passport
-passport.use('register', new TwoFAStrategy({
+passport.use('register', new LocalStrategy({
   usernameField : 'email',
   passwordField : 'pword',
   passReqToCallBack: true,
@@ -118,17 +123,21 @@ function(email, pword, done) {
       if (rows.length) {
         return done(null, false, {message: 'Email is already taken'});
       }
-      // else {
-        var newUser = new Object();
-        newUser.email = email;
-        newUser.pword = pword;
+       else {
+        // var newUser = new Object();
+        // newUser.email = email;
+        // newUser.pword = pword;
+        var user = {
+            username: email,
+            password: pword
+        };
         const hashedPword = bcrypt.hashSync(pword, salt);
         var query = "INSERT INTO `users` (email, pword) VALUES ('" + email + "', '" + hashedPword + "')";
         con.query(query,function(err, rows){
-          newUser.id = rows.insertId;
+          user.id = rows.insertId;
 
-          return done(null, newUser);
+          return done(null, user);
         });
-      // }
+       }
   });
 }));

@@ -1,4 +1,16 @@
 <%- include ('partials/header.ejs'); -%>
+    <div class="container">
+        <% if (message != '') { %>
+            <p><%= message %></p>
+        <% } %>   
+        <form class="shadow-sm p-3 mb-5 bg-white rounded" action="" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Allergy</button>
+        </form>
+    </div>
 
 </div>
 </body>
