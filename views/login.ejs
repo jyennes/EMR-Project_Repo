@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md login">
-            <h3> Login here <h3>
+            <h3 class="font-weight-normal"> Login here <h3>
 
             <% if (messages.error) { %>
                 <%= messages.error %>
@@ -18,8 +18,8 @@
                     <input type="password" class="form-control" id="pword" name="pword" placeholder="Password" required>
                 </div>
                 <!-- <div class="form-group">
-                    <label for="pword"></label>
-                    <input type="code" class="form-control" id="code" name="code" placeholder="Authenticator Code">
+                    <label for="code"></label>
+                    <input type="text" class="form-control" id="code" name="code" placeholder="code">
                 </div> -->
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>

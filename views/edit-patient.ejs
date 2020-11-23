@@ -1,51 +1,51 @@
 <%- include ('partials/header.ejs'); -%>
-<div class="">
+<div class="container">
     <% if (message) { %>
         <p class=""><%= message %></p>
     <% } %>
 
     <% if (patient) { %>
-        <form class="" action="" method="post" enctype="multipart/form-data">
+        <form class="shadow-sm p-3 mb-5 bg-white rounded" action="" method="post" enctype="multipart/form-data">
             <div class="">
-                <div class="">
+                <div class="form-group">
                     <label for="last-name">Last Name</label>
-                    <input type="text" class="" name="lastName" id="last-name" value="" required>
+                    <input type="text" class="form-control" name="lastName" id="last-name" value="" required>
                 </div>
-                <div class="">
+                <div class="form-group">
                     <label for="first-name">First Name</label>
-                    <input type="text" class="" name="firstName" id="first-name" value="" required>
+                    <input type="text" class="form-control" name="firstName" id="first-name" value="" required>
                 </div>
-                <div class="">
+                <div class="form-group">
                     <label for="birthDate">Birth Date</label>
-                    <input type="date" class="" name="birthDate" id="birth-date" value="" required>
+                    <input type="date" class="form-control" name="birthDate" id="birth-date" value="" required>
                 </div>
-                <div class="">
+                <div class="form-group">
                     <label for="heightFeet">Height (feet)</label>
-                    <input type="number" class="" name="heightFeet" id="height-feet" value="<%= patient.heightFeet %>" required>
+                    <input type="number" class="form-control" name="heightFeet" id="height-feet" value="<%= patient.heightFeet %>" required>
                 </div>
-                <div class="">
+                <div class="form-group">
                     <label for="heightInches">Height (inches)</label>
-                    <input type="number" class="" name="heightInches" id="height-inches" value="<%= patient.heightInches %>" required>
+                    <input type="number" class="form-control" name="heightInches" id="height-inches" value="<%= patient.heightInches %>" required>
                 </div>
-                <div class="">
+                <div class="form-group">
                     <label for="weight">Weight</label>
-                    <input type="number" class="" name="weight" id="weight" value="<%= patient.weight %>" required>
+                    <input type="number" class="form-control" name="weight" id="weight" value="<%= patient.weight %>" required>
                 </div>
                 <!-- <div class="">
                     <label for="areaCode">Area Code</label>
                     <input type="number" class="" name="areaCode" id="area-code" value="<#%= patient.areaCode %>" required>
                 </div> -->
-                <div class="">
+                <div class="form-group">
                     <label for="phoneNumber">Phone Number</label>
-                    <input type="text" class="" name="phoneNumber" id="phone-number" value="" required>
+                    <input type="text" class="form-control" name="phoneNumber" id="phone-number" value="" required>
                 </div>
-                <div class="">
+                <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="" name="email" id="email" value="" required>
+                    <input type="email" class="form-control" name="email" id="email" value="" required>
                 </div>
-                <div class="">
+                <div class="form-group">
                     <label for="street">Street</label>
-                    <input type="text" class="" name="street" id="street" value="" required>
+                    <input type="text" class="form-control" name="street" id="street" value="" required>
                 </div>
 
             </div>

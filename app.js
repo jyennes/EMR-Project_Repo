@@ -144,7 +144,14 @@ function checkAuthenticated(req, res, next) {
     }
     res.redirect('/login')
   }
-  
+  function checkAuthenticatedAdmin(req, res, next) {
+    if (req.isAuthenticated() && req.user.role == 'Admin') {
+      return next()
+    }
+    res.redirect('/login')
+  }
+
+
 //   function checkNotAuthenticated(req, res, next) {
 //     if (req.isAuthenticated()) {
 //       return res.redirect('/')

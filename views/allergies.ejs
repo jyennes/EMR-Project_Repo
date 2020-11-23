@@ -1,6 +1,6 @@
 <%- include ('partials/header.ejs'); -%>
     <div class="container-fluid"> 
-        <a  href="/addAllergy" class="btn btn-primary btn-sm" title="Add a new allergy">Add allergy</a>
+        <a  href="/addAllergy/<%= allergy.id %>" class="btn btn-primary btn-sm" title="Add a new allergy">Add allergy</a>
 
         <% if (allergy.length > 0) {%> 
             <table class="table table-striped">

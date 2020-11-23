@@ -5,13 +5,14 @@ const crypto = require('../config/crypto');
 module.exports = {
     allergiesPage: (req, res) => {
         let allergyId = req.params.id;
-        let query = "SELECT * FROM `allergy` WHERE id = '" + allergyId + "' ";
+        let query = "SELECT * FROM `allergy` WHERE patientId = '" + allergyId + "' ";
         //let query = "SELECT * FROM `allergy` ORDER BY id ASC";
 
         con.query(query, (err, result) => {
             if (err) {
                 res.redirect('/allergies');
             }
+            decrypter(result)
             res.render('allergies.ejs', {
                 title: "Allergies"
                 ,allergy: result
@@ -20,17 +21,27 @@ module.exports = {
     },
 
     addAllergyPage: (req, res) => {
-        res.render('add-allergy.ejs', {
-            title: "Add Allergy",
-            message: ''
+        let allergyId = req.params.id;
+        let query = "SELECT * FROM `allergy` WHERE id = '" + allergyId + "' ";
+
+        con.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.render('add-allergy.ejs', {
+                title: "Add Allergy",
+                allergy: result,
+                message: ''
+            });
         });
     },
 
     addAllergy: (req, res) => {
+        var id = req.params.id   //insert this
         var name = req.body.name;
         var name = crypto.encrypt(name);
 
-        let query = "INSERT INTO `allergy` (name) VALUES ('" + name + "')";
+        let query = "INSERT INTO `allergy` (name, patientId) VALUES ('" + name + "', '" + id + "')";
         con.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -77,3 +88,9 @@ module.exports = {
     }
 
 };
+
+function decrypter(result) {
+    for (var i = 0; i < result.length; i++) {
+        result[i].name = crypto.decrypt(result[i].name)
+    }
+}

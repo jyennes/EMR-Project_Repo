@@ -2,6 +2,9 @@
 
 <h1>Register</h1>
 
+<% if (messages.error) { %>
+    <%= messages.error %>
+<% } %>
 <form action="/register" method="post" enctype="multipart/form-data">
     <!-- <div>
         <label for="uname">Username</label>

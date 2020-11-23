@@ -2,8 +2,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const salt = bcrypt.genSaltSync(10);
-const GoogleAuthenticator = require('passport-2fa-totp').GoogeAuthenticator;
-//const TwoFAStrategy = require('passport-2fa-totp').Strategy;
+const crypto = require('../config/crypto');
 
 module.exports = {
     loginPage: (req, res) => {
@@ -19,7 +18,8 @@ module.exports = {
             failureRedirect: '/login',
             failureFlash: true
             })(req, res, next);
-        },
+    },
+
 
     registerUser: (req, res, next) => {
         console.log(req.body);
@@ -35,37 +35,7 @@ module.exports = {
             title: "Register"
         });
     },
-
-    // twoFactorPage: (req, res) => {
-    //     var err = {message: '2fa Error'};
-    //     var qrInfo = GoogleAuthenticator.register(req.user.email);
-    //     req.session.qr = qrInfo.secret;
-
-    //     res.render('2fa.ejs', {
-    //         title: "Two Factor",
-    //         errors: err,
-    //         qr: qrInfo.qr
-    //     });
-    // },
-
-    // twoFactor: (req, res, next) => {
-    //     if (!req.session.qr) {
-    //         {console.log ('2fa error')};
-    //         return res.redirect('/2fa');
-    //     }(req, res, next);
-    //     con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err,rows) {
-    //         rows.update(rows, { $set: { secret: req.session.qr } }, function (err) {
-    //             if (err) {
-    //                 console.log('setup-2fa-error', err);
-    //                 return res.redirect('/setup-2fa');
-    //             }
-    //             res.redirect('/');
-    //         })
-    //     })
-    // }
-
 };
-
 
 // serialize and deserialize user instance to form session
 passport.serializeUser((user, done) => done(null, user.id))
@@ -75,38 +45,31 @@ passport.deserializeUser(function(id, done) {
     });
 })
 
-// Verify user and password with local strategies.
+
+// Verify user and password with local strategy.
 passport.use('login', new LocalStrategy({
     usernameField : 'email',
     passwordField : 'pword',
-    codeField: 'code'
-    //passReqToCallBack: true,
-    //skipTotpVerification: true
+    // passReqToCallBack: true
 },
-function(email, pword, done) { 
-
-    con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err, rows){
-       if (err)
-           return done(err);
-           if (!rows.length) {
-           return done(null, false, {message: 'Incorect user or password'} && console.log('User does not exist')); 
-       } 
-       if (! (bcrypt.compareSync(pword, rows[0].pword))) {
-           return done(null, false, {message: 'Incorrect user or password'}); 
-       }
-       return done(null, rows[0]);			
-   })
-}, 
-// function(email, done) {
-//       con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err,rows) {
-//         if (!rows.secret) {
-//             done(new Error("Google Authenticator is not setup."));
-//         } else {
-//             var secret = GoogleAuthenticator.decodeSecret(rows.secret);
-//             done(null, secret, 30);
-//         }
-//       })
-// }
+    function(email, pword, done) { 
+        
+        con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err, rows){
+            // var code = req.body.code
+            if (err)
+                return done(err);
+            if (!(rows.length)) {
+                return done(null, false, {message: 'Incorect user or password'} ); //&& console.log('User does not exist')
+            } 
+            if (! (bcrypt.compareSync(pword, rows[0].pword))) {
+                return done(null, false, {message: 'Incorrect user or password'}); 
+            }
+            // if (!(rows[0].code == code)) {
+            //     return done(null, false, {message: 'Incorrect code'}); 
+            // }
+            return done(null, rows[0]);			
+        })
+    }, 
 ));
 
 //register with passport
@@ -114,7 +77,6 @@ passport.use('register', new LocalStrategy({
   usernameField : 'email',
   passwordField : 'pword',
   passReqToCallBack: true,
-  skipTotpVerification: true
 },
 function(email, pword, done) {
 
@@ -124,15 +86,15 @@ function(email, pword, done) {
         return done(null, false, {message: 'Email is already taken'});
       }
        else {
-        // var newUser = new Object();
-        // newUser.email = email;
-        // newUser.pword = pword;
+
         var user = {
             username: email,
-            password: pword
+            password: pword,
         };
+        var code = crypto.randomString();
+        // const encEmail = crypto.encrypt(email);
         const hashedPword = bcrypt.hashSync(pword, salt);
-        var query = "INSERT INTO `users` (email, pword) VALUES ('" + email + "', '" + hashedPword + "')";
+        var query = "INSERT INTO `users` (email, pword, code) VALUES ('" + email + "', '" + hashedPword + "', '" + code + "')";
         con.query(query,function(err, rows){
           user.id = rows.insertId;
 
@@ -141,3 +103,4 @@ function(email, pword, done) {
        }
   });
 }));
+

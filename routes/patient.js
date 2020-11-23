@@ -34,7 +34,7 @@ module.exports = {
 
         var firstName = crypto.encrypt(firstName);
         var lastName = crypto.encrypt(lastName);
-        // var birthDate = crypto.encrypt(birthDate);
+        //var birthDate = crypto.encrypt(birthDate);
         var phoneNumber = crypto.encrypt(phoneNumber);
         var email = crypto.encrypt(email);
         var street = crypto.encrypt(street)
