@@ -1,27 +1,39 @@
 <%- include ('partials/header.ejs'); -%>
 
-<h1>Register</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md login">
+            <h3 class="font-weight-normal">Register</h3>
 
-<% if (messages.error) { %>
-    <%= messages.error %>
-<% } %>
-<form action="/register" method="post" enctype="multipart/form-data">
-    <!-- <div>
-        <label for="uname">Username</label>
-        <input type="text" id="uname" name="uname" required>
-    </div> -->
-    <div>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+            <% if (messages.error) { %>
+                <%= messages.error %>
+            <% } %>
+            <form action="/register" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="email"></label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="pword"></label>
+                    <input type="password" class="form-control" id="pword" name="pword" placeholder="Password"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPword"></label>
+                    <input type="password" class="form-control" id="confirmPword" name="confirmPword" 
+                    placeholder="Confirm Password" required>
+                </div>
+                <div class="form-group">
+                <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="pword">Password</label>
-        <input type="paswword" id="pword" name="pword" required>
-    </div>
-    <button type="submit">Register</button>
-</form>
-<!-- <a href="/login">Login</a> -->
+</div>
 
 </div>
 </body>
 </html>
+
+

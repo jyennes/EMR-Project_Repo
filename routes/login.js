@@ -24,7 +24,7 @@ module.exports = {
     registerUser: (req, res, next) => {
         console.log(req.body);
         passport.authenticate('register', {
-            successRedirect: '/',
+            successRedirect: '/code',
             failureRedirect: '/register',
             failureFlash: true
             })(req, res, next);
@@ -35,6 +35,17 @@ module.exports = {
             title: "Register"
         });
     },
+
+    codePage: (req, res) => {
+        res.render('code.ejs', {
+            title: "Copy this code"
+        });
+    },
+
+    logout: (req, res) => {
+        req.logout();
+		res.redirect('/');
+    }
 };
 
 // serialize and deserialize user instance to form session
@@ -50,23 +61,23 @@ passport.deserializeUser(function(id, done) {
 passport.use('login', new LocalStrategy({
     usernameField : 'email',
     passwordField : 'pword',
-    // passReqToCallBack: true
+    passReqToCallback : true
 },
-    function(email, pword, done) { 
+    function(req, email, pword, done) { 
         
-        con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err, rows){
-            // var code = req.body.code
+        con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err, rows){        
             if (err)
                 return done(err);
             if (!(rows.length)) {
-                return done(null, false, {message: 'Incorect user or password'} ); //&& console.log('User does not exist')
+                return done(null, false, {message: 'Incorect user, password, or code'} ); //&& console.log('User does not exist')
             } 
             if (! (bcrypt.compareSync(pword, rows[0].pword))) {
-                return done(null, false, {message: 'Incorrect user or password'}); 
+                return done(null, false, {message: 'Incorect user, password, or code'}); 
             }
-            // if (!(rows[0].code == code)) {
-            //     return done(null, false, {message: 'Incorrect code'}); 
-            // }
+            var code = req.body.code
+            if (!(rows[0].code == code)) {
+                return done(null, false, {message: 'Incorect user, password, or code'}); 
+            }
             return done(null, rows[0]);			
         })
     }, 
@@ -76,9 +87,9 @@ passport.use('login', new LocalStrategy({
 passport.use('register', new LocalStrategy({
   usernameField : 'email',
   passwordField : 'pword',
-  passReqToCallBack: true,
+  passReqToCallback : true
 },
-function(email, pword, done) {
+function(req, email, pword, done) {
 
   con.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err,rows){
       if (err) return done(err);
@@ -86,7 +97,9 @@ function(email, pword, done) {
         return done(null, false, {message: 'Email is already taken'});
       }
        else {
-
+        if (req.body.pword !== req.body.confirmPword) {
+            return done(null, false, { message: 'Passwords do not match' });
+        }
         var user = {
             username: email,
             password: pword,
@@ -97,10 +110,11 @@ function(email, pword, done) {
         var query = "INSERT INTO `users` (email, pword, code) VALUES ('" + email + "', '" + hashedPword + "', '" + code + "')";
         con.query(query,function(err, rows){
           user.id = rows.insertId;
-
           return done(null, user);
         });
        }
   });
 }));
+
+
 

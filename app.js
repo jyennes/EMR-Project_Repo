@@ -24,7 +24,7 @@ const {adminPage, role, rolePage} = require('./routes/admin');
 const {nurseAssign, nurseAssignPage, nurseAdminPage} = require('./routes/nurseAdmin');
 
 // login
-const {loginPage, registerPage, registerUser, userAuth, twoFactorPage, twoFactor} = require('./routes/login');
+const {loginPage, registerPage, registerUser, userAuth, logout, codePage, twoFactorPage, twoFactor} = require('./routes/login');
 
 const port = 5000;
 
@@ -66,6 +66,13 @@ app.use(passport.session());
 //   next();
 // });
 
+app.use(function(req,res,next){
+  if (req.user) {
+    res.locals.user = req.user;
+  }
+  next();
+});
+
 // Routes
 app.get('/',checkAuthenticated, getHomePage);
 app.get('/add', addPatientPage);
@@ -86,6 +93,8 @@ app.post('/nurseAssign/:id', nurseAssign)
 // Login Routes
 app.get('/login', loginPage);
 app.get('/register', registerPage);
+app.get('/code', codePage);
+app.get('/logout', logout);
 // app.get('/2fa', twoFactorPage)
 app.post('/login', userAuth);
 app.post('/register', registerUser);
@@ -158,5 +167,4 @@ function checkAuthenticated(req, res, next) {
 //     }
 //     next()
 //   }
-
 
