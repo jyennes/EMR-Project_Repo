@@ -6,8 +6,11 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
 const app = express();
+const MySQLEvents = require('@rodrigogs/mysql-events');
 const passport = require('passport');
 const session = require('express-session');
+const ip = require("ip");
+
 // const LocalStrategy = require('passport-local').Strategy;
 // const bcrypt = require('bcrypt');
 
@@ -29,19 +32,47 @@ const {loginPage, registerPage, registerUser, userAuth, logout, codePage, twoFac
 const port = 5000;
 
 // create connection to database
-const con = mysql.createConnection ({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'emr_db'
-});
-
-// connect database
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
+const program = async () => {
+  const con = mysql.createConnection ({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'emr_db'
   });
-global.con = con;
+
+  //connect database
+  con.connect(function(err) {
+      if (err) throw err;
+      console.log("Connected!");
+    });
+  global.con = con;
+
+  const instance = new MySQLEvents(con, {
+    startAtEnd: true 
+  });
+
+  await instance.start();
+
+  instance.addTrigger({
+    name: 'monitoring all emr_db statments',
+    expression: 'emr_db.*', 
+    statement: MySQLEvents.STATEMENTS.ALL, 
+    onEvent: (event) => {
+      //prints ip address
+      process.stdout.write("User IP: ");
+      console.dir ( ip.address() );
+
+      console.log(event);
+    }
+  });
+
+  instance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
+  instance.on(MySQLEvents.EVENTS.ZONGJI_ERROR, console.error);
+};
+program()
+  .then(() => console.log('Waiting for database events...'))
+  .catch(console.error);
+
 
 // middleware setup
 app.use(flash());
@@ -153,12 +184,12 @@ function checkAuthenticated(req, res, next) {
     }
     res.redirect('/login')
   }
-  function checkAuthenticatedAdmin(req, res, next) {
-    if (req.isAuthenticated() && req.user.role == 'Admin') {
-      return next()
-    }
-    res.redirect('/login')
-  }
+  // function checkAuthenticatedAdmin(req, res, next) {
+  //   if (req.isAuthenticated() && req.user.role == 'Admin') {
+  //     return next()
+  //   }
+  //   res.redirect('/login')
+  // }
 
 
 //   function checkNotAuthenticated(req, res, next) {
@@ -167,4 +198,6 @@ function checkAuthenticated(req, res, next) {
 //     }
 //     next()
 //   }
+
+
 
