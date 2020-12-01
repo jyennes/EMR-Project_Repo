@@ -67,7 +67,16 @@ function decrypter(result) {
     for (var i = 0; i < result.length; i++) {
         result[i].street = crypto.decrypt(result[i].street)
     }
-    // for (var i = 0; i < result.length; i++) {
-    //     result[i].birthDate = crypto.decrypt(result[i].birthDate)
-    // }
+    for (var i = 0; i < result.length; i++) {
+        result[i].birthDate = crypto.decrypt(result[i].birthDate)
+    }
+    for (var i = 0; i < result.length; i++) {
+        result[i].heightFeet = crypto.decrypt(result[i].heightFeet)
+    }
+    for (var i = 0; i < result.length; i++) {
+        result[i].heightInches = crypto.decrypt(result[i].heightInches)
+    }
+    for (var i = 0; i < result.length; i++) {
+        result[i].weight = crypto.decrypt(result[i].weight)
+    }
 }

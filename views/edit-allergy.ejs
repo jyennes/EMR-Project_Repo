@@ -1,5 +1,24 @@
 <%- include ('partials/header.ejs'); -%>
 
+    <% if (message) { %>
+        <p class=""><%= message %></p>
+    <% } %>
+
+    <% if (allergy) { %>
+        <form class="shadow-sm p-3 mb-5 bg-white rounded" action="" method="post" enctype="multipart/form-data">
+            <div class="">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" id="name" value="<%= allergy.name %>" required>
+                </div>
+            </div>
+        </form>
+
+        <% } else { %>
+            <p class="">Allergy Not Found</p> 
+        <% } %> 
+
+
 </div>
 </body>
 </html>

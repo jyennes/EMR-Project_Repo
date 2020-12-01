@@ -15,6 +15,7 @@ module.exports = {
             decrypter(result)
             res.render('allergies.ejs', {
                 title: "Allergies"
+                //,patient: result
                 ,allergy: result
             });
         });
@@ -46,7 +47,8 @@ module.exports = {
             if (err) {
                 return res.status(500).send(err);
             }
-            res.redirect('/');
+            
+            res.redirect('/allergies/:id');
         });
     },
     editAllergyPage: (req, res) => {
@@ -58,7 +60,7 @@ module.exports = {
             }
             res.render('edit-allergy.ejs', {
                 title: "Edit Allergy",
-                patient: result[0],
+                allergy: result[0],
                 message: ''
             });
         });

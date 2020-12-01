@@ -21,7 +21,10 @@
             <a href="/" class="btn btn-light btn-lg ">EMR</a>
             <h1 class="font-weight-light">Electronic Medical Record</h1>
             <% if (locals.user) { %>
-            <a href="/logout" class="btn btn-warning btn-sm">Logout</a>
+            <ul>
+                <p class="font-weight-light"><%=locals.user.email %></p>
+                <a href="/logout" class="btn btn-warning btn-sm">Logout</a>
+            </ul>
             <% } else { %>
             <a href="/login" class="btn btn-primary btn-sm">Login</a>
             <% } %>

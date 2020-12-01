@@ -34,10 +34,13 @@ module.exports = {
 
         var firstName = crypto.encrypt(firstName);
         var lastName = crypto.encrypt(lastName);
-        //var birthDate = crypto.encrypt(birthDate);
+        var birthDate = crypto.encrypt(birthDate);
         var phoneNumber = crypto.encrypt(phoneNumber);
         var email = crypto.encrypt(email);
-        var street = crypto.encrypt(street)
+        var street = crypto.encrypt(street);
+        var heightFeet = crypto.encrypt(heightFeet);
+        var heightInches = crypto.encrypt(heightInches);
+        var weight = crypto.encrypt(weight);
 
         let query = "INSERT INTO `patient` (firstName, lastName, birthDate, heightFeet, heightInches, weight, PhoneNumber, email, street, patientId) VALUES ('" +
             firstName + "', '" + lastName + "', '" + birthDate + "', '" + heightFeet + "', '" + heightInches + "', '" + weight + "', '" + phoneNumber + "', '" + email + "', '" + street + "', '" + patientId + "')";
@@ -65,7 +68,7 @@ module.exports = {
         }
         else {
             res.redirect('/');
-            }
+             }
     },
     editPatient: (req, res) => {
         let patientId = req.params.id;

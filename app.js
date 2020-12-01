@@ -9,7 +9,9 @@ const app = express();
 const MySQLEvents = require('@rodrigogs/mysql-events');
 const passport = require('passport');
 const session = require('express-session');
-const ip = require("ip");
+//const ip = require("ip");
+const requestIp = require('request-ip');
+
 
 // const LocalStrategy = require('passport-local').Strategy;
 // const bcrypt = require('bcrypt');
@@ -30,6 +32,7 @@ const {nurseAssign, nurseAssignPage, nurseAdminPage} = require('./routes/nurseAd
 const {loginPage, registerPage, registerUser, userAuth, logout, codePage, twoFactorPage, twoFactor} = require('./routes/login');
 
 const port = 5000;
+
 
 // create connection to database
 const program = async () => {
@@ -59,8 +62,7 @@ const program = async () => {
     statement: MySQLEvents.STATEMENTS.ALL, 
     onEvent: (event) => {
       //prints ip address
-      process.stdout.write("User IP: ");
-      console.dir ( ip.address() );
+      //process.stdout.write("User IP: ");
 
       console.log(event);
     }
@@ -90,6 +92,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // Makes user available on all ejs files (not used yet)
 // app.use(function(req, res, next) {
@@ -133,10 +136,10 @@ app.post('/register', registerUser);
 
 // Allergy Routes
 app.get('/allergies/:id', allergiesPage);
-app.get('/addAllergy', addAllergyPage);
+app.get('/addAllergy/', addAllergyPage);
 app.get('/editAllergy/:id', editAllergyPage);
 app.get('/deleteAllergy/:id', deleteAllergy);
-app.post('/addAllergy', addAllergy);
+app.post('/addAllergy/', addAllergy);
 app.post('/editAllergy/:id', editAllergy);
 
 // Doctor Routes

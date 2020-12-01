@@ -1,7 +1,6 @@
 <%- include ('partials/header.ejs'); -%>
     <div class="container-fluid"> 
         <a  href="/addAllergy/<%= allergy.id %>" class="btn btn-primary btn-sm" title="Add a new allergy">Add allergy</a>
-
         <% if (allergy.length > 0) {%> 
             <table class="table table-striped">
                 <thead>
@@ -15,6 +14,10 @@
                         <tr>
                             <th scope="row"><%= allergy.id %></th>
                             <td><%= allergy.name %> </td>
+                            <td>
+                                <a href="/edit/<%= allergy.id %>" target="_blank" rel="noopener" class="badge badge-secondary">Edit</a>
+                                <a href="/delete/<%= allergy.id %>" onclick="return confirm('Are you sure you want to delete this item?');" class="badge badge-danger">Delete</a>
+                            </td>
                         </tr>
                         <% }) %>
                 </tbody>
@@ -24,5 +27,5 @@
         <% } %>
     </div>
 </div>
-</body>
+</body> 
 </html>

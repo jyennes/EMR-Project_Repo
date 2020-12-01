@@ -12,17 +12,16 @@ module.exports = {
     },
 
     userAuth: (req, res, next) => {
-        console.log(req.body);
-        passport.authenticate('login', {
+        console.log('User: ' + req.body.email);
+        passport.authenticate('login',{
             successRedirect: '/',
             failureRedirect: '/login',
             failureFlash: true
             })(req, res, next);
     },
 
-
     registerUser: (req, res, next) => {
-        console.log(req.body);
+        console.log(req.body.email);
         passport.authenticate('register', {
             successRedirect: '/code',
             failureRedirect: '/register',
